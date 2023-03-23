@@ -1,0 +1,110 @@
+.pizza_size_selector {
+	border-radius: 20px;
+	background-color: #f2f2f6;
+	display: flex;
+	width: 300px;
+	height: 30px;
+}
+
+.pizza_menu {
+	display: flex;
+	flex-direction: row;
+	column-gap: 20px;
+}
+
+.pizza_menu__addons {
+	flex: 1;
+}
+
+.size_selector_wrapper {
+	font-size: 24px;
+}
+
+.topping_selector_title {
+	font-size: 18px;
+
+}
+
+.topping_selector_wrapper{
+	margin-top: 20px
+}
+
+.pizza_size_selector__button {
+	justify-content: space-between;
+	border-width: 0px;
+	box-shadow: 10px 10px 20px lightgray;
+	margin: 2px;
+	border-radius: 20px;
+	width: 100%;
+	background-color: #f2f2f6;
+	/* padding: 10px; */
+}
+
+.pizza_size_selector__button--active {
+	background-color: #fdfefe;
+}
+
+.pizza_list {
+	display: flex;
+	width: 500px;
+	flex: 2;
+
+}
+
+.pizza_list_item{
+	height: 200px;
+	width: 200px;
+	background-color: #fefefd;
+	border-width: 0px;
+	border-radius: 10px;
+}
+
+.pizza_list_item--active{
+	background-color: #f2f2f6;
+}
+
+.pizza_list_item__image{
+
+}
+
+.pizza_list_item__name{
+
+}
+
+.pizza_topping_selector{
+	display: flex;
+	border-radius: 20px;
+	column-gap: 10px;
+}
+
+.pizza_topping_selector__item{
+	width: 120px;
+	height: 140px;
+	border-width: 0px;
+	box-shadow 10px 10px;
+	border-radius: 20px;
+	background-color: #fefefe;
+	box-shadow: 10px 10px 20px lightgray;
+}
+
+.pizza_topping_selector__item__image{
+	object-fit: cover;
+	height: 100px;
+	width: 100px;
+}
+
+.pizza_topping_selector__item--active{
+	border-width: 1px;
+	border-color: orange;
+}
+
+.add_to_cart {
+	background-color: #ec702c;
+	font-size: 16px;
+	width: 400px;
+	margin-top: 50px;
+	height: 100px;
+	border-radius: 50px;
+	border-width: 0px;
+	color: white;
+}

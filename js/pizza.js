@@ -1,4 +1,4 @@
-class PizzaSize {
+export class PizzaSize {
 	constructor(name, price, calories) {
 		this.name = name
 		this.price = price
@@ -6,38 +6,27 @@ class PizzaSize {
 	}
 }
 
-let smallPizzaSize = new PizzaSize('small', 100, 100)
-let bigPizzaSize = new PizzaSize('big', 200, 200)
-
-class PizzaTopping {
-	constructor(name, priceBig, priceSmall, caloriesBig, caloriesSmall) {
+export class PizzaTopping {
+	constructor(name, priceBig, priceSmall, caloriesBig, caloriesSmall, image) {
 		this.name = name
 		this.priceBig = priceBig
 		this.priceSmall = priceSmall
 		this.caloriesBig = caloriesBig
 		this.caloriesSmall = caloriesSmall
+		this.image = image
 	}
 }
 
-let mozzarella = new PizzaTopping('mozzarella', 100, 50, 0, 0)
-let cheeseBort = new PizzaTopping('cheese bort', 300, 150, 50, 50)
-let cheddarAndParmesan = new PizzaTopping(
-	'cheddar and parmesan',
-	300,
-	150,
-	50,
-	50
-)
-
-class PizzaType {
-	constructor(name, calories, price) {
+export class PizzaType {
+	constructor(name, calories, price, image) {
 		this.name = name
 		this.calories = calories
 		this.price = price
+		this.image = image
 	}
 }
 
-class Pizza {
+export class Pizza {
 	constructor(pizzaType, size) {
 		this.pizzaType = pizzaType
 		this.size = size
@@ -60,11 +49,11 @@ class Pizza {
 	calculateCalories() {
 		let sum = this.pizzaType.calories + this.size.calories
 
-		if (this.size === smallPizzaSize) {
+		if (this.size.name === 'small') {
 			this.toppings.forEach((value) => {
 				sum += value.caloriesSmall
 			})
-		} else if (this.size === bigPizzaSize) {
+		} else if (this.size.name === 'big') {
 			this.toppings.forEach((value) => {
 				sum += value.caloriesBig
 			})
@@ -76,17 +65,25 @@ class Pizza {
 	calculatePrice() {
 		let sum = this.pizzaType.price + this.size.price
 
-		if (this.size === smallPizzaSize) {
+		if (this.size.name === 'small') {
 			this.toppings.forEach((value) => {
 				sum += value.priceSmall
 			})
-		} else if (this.size === bigPizzaSize) {
+		} else if (this.size.name === 'big') {
 			this.toppings.forEach((value) => {
 				sum += value.priceBig
 			})
 		}
 
 		return sum
+	}
+
+	setPizzaSize(pizzaSize) {
+		this.size = pizzaSize
+	}
+
+	setPizzaType(pizzaType) {
+		this.pizzaType = pizzaType
 	}
 
 	addTopping(topping) {
@@ -101,11 +98,3 @@ class Pizza {
 		}
 	}
 }
-
-let margaritta = new PizzaType('margaritta', 300, 500)
-let pepperoni = new PizzaType('pepperoni', 400, 800)
-let bavarskaya = new PizzaType('pepperoni', 450, 700)
-
-let bigMargaritta = new Pizza(margaritta, bigPizzaSize)
-let smallPepperoni = new Pizza(pepperoni, smallPizzaSize)
-let bigBavarskaya = new Pizza(bavarskaya, bigPizzaSize)
