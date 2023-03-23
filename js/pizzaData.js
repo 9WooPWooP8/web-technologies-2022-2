@@ -1,7 +1,4 @@
-import { PizzaSizeSelector } from './components/PizzaSizeSelector.js'
-import { PizzaType, PizzaTopping, Pizza, PizzaSize } from './js/pizza.js'
-import { PizzaList } from './components/PizzaList.js'
-import { PizzaToppingList } from './components/PizzaToppingList.js'
+import { PizzaType, PizzaTopping, PizzaSize } from './pizza.js'
 
 let smallPizzaSize = new PizzaSize('small', 100, 100)
 let bigPizzaSize = new PizzaSize('big', 200, 200)

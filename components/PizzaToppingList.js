@@ -1,4 +1,3 @@
-import { PizzaSize } from '../js/pizza.js'
 import { PizzaToppingListItem } from './PizzaToppingListItem.js'
 
 export class PizzaToppingList {

@@ -7,9 +7,12 @@ export class PizzaList {
 		this.pizzaTypes = pizzaTypes
 		this.pizzaComponents = []
 
-		this.pizzaTypes.forEach((pizzaType) => {
+		this.pizzaTypes.forEach((pizzaType, index) => {
 			let pizzaContainer = document.createElement('button')
 			pizzaContainer.classList.add('pizza_list_item')
+
+			if (index === 0)
+				pizzaContainer.classList.add('pizza_list_item--active')
 
 			this.pizzaListContainer.appendChild(pizzaContainer)
 
