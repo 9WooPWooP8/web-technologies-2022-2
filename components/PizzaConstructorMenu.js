@@ -2,35 +2,38 @@ import { PizzaSizeSelector } from './PizzaSizeSelector.js'
 import { Pizza } from '../js/pizza.js'
 import { PizzaList } from './PizzaList.js'
 import { PizzaToppingList } from './PizzaToppingList.js'
+import { AddToCartButton } from './AddToCartButton.js'
 
 export class PizzaConstructorMenu {
-	constructor(pizzaTypes, pizzaToppings, pizzaSizes) {
-		this.pizzaTypes = pizzaTypes
-		this.pizzaToppings = pizzaToppings
-		this.pizzaSizes = pizzaSizes
+	constructor(el, options) {
+		this.el = el
+		this.pizzaTypes = options.pizzaTypes
+		this.pizzaToppings = options.pizzaToppings
+		this.pizzaSizes = options.pizzaSizes
 
-		this.constructedPizza = new Pizza(pizzaTypes[0], pizzaSizes[0])
+		this.constructedPizza = new Pizza(this.pizzaTypes[0], this.pizzaSizes[0])
 
-		this.addToCartButton = document.getElementsByClassName('add_to_cart')[0]
-
-		this.setTotalPrice = (price, calories) => {
-			this.addToCartButton.textContent = `Добавить в корзину за ${price}(${calories} кКал)`
+		let getData = () => {
+			return {
+				price: this.constructedPizza.calculatePrice(),
+				calories: this.constructedPizza.calculatePrice(),
+			}
 		}
+
+		this.addToCartButton = new AddToCartButton(getData)
 
 		this.onSizeChange = (newPizzaSize) => {
 			this.constructedPizza.setPizzaSize(newPizzaSize)
-			this.setTotalPrice(
-				this.constructedPizza.calculatePrice(),
-				this.constructedPizza.calculateCalories()
-			)
+
+			this.render()
 		}
 
 		this.onPizzaTypeChange = (newPizzaType) => {
 			this.constructedPizza.setPizzaType(newPizzaType)
-			this.setTotalPrice(
-				this.constructedPizza.calculatePrice(),
-				this.constructedPizza.calculateCalories()
-			)
+
+			console.log('click')
+
+			this.render()
 		}
 
 		this.onPizzaToppingSelect = (newPizzaTopping) => {
@@ -45,43 +48,38 @@ export class PizzaConstructorMenu {
 				this.constructedPizza.addTopping(newPizzaTopping)
 			}
 
-			this.setTotalPrice(
-				this.constructedPizza.calculatePrice(),
-				this.constructedPizza.calculateCalories()
-			)
+			this.render()
 		}
 
-		let pizzaSizeSelectorElement = document.getElementsByClassName(
-			'pizza_size_selector'
-		)[0]
+		this.pizzaSizeSelector = new PizzaSizeSelector({
+			pizzaSizes: this.pizzaSizes,
+			onSizeChange: this.onSizeChange,
+		})
 
-		this.pizzaSizeSelector = new PizzaSizeSelector(
-			pizzaSizeSelectorElement,
-			pizzaSizes,
-			this.onSizeChange
-		)
+		this.pizzasListComponent = new PizzaList({
+			pizzaTypes: this.pizzaTypes,
+			onPizzaChange: this.onPizzaTypeChange,
+		})
 
-		let pizzaListElementContainer =
-			document.getElementsByClassName('pizza_list')[0]
+		this.pizzaToppingListComponent = new PizzaToppingList({
+			pizzaToppingTypes: this.pizzaToppings,
+			onPizzaToppingSelect: this.onPizzaToppingSelect,
+		})
+	}
 
-		this.pizzasListComponent = new PizzaList(
-			pizzaListElementContainer,
-			pizzaTypes,
-			this.onPizzaTypeChange
-		)
-
-		let pizzaToppingListComponentContainer = document.getElementsByClassName(
-			'pizza_topping_selector'
-		)[0]
-
-		this.pizzaToppingListComponent = new PizzaToppingList(
-			pizzaToppingListComponentContainer,
-			pizzaToppings,
-			this.onPizzaToppingSelect
-		)
-
-		this.pizzaSizeSelector.render()
-		this.pizzasListComponent.render()
-		this.pizzaToppingListComponent.render()
+	render() {
+		this.el.innerHTML = `
+				${this.pizzasListComponent.render()}
+				<div class="pizza-menu__addons">
+					${this.pizzaSizeSelector.render()}
+					<div class="topping-selector-wrapper">
+						<div class="topping_selector_title">
+							Добавить по вкусу
+						</div>
+					${this.pizzaToppingListComponent.render()}
+					</div>
+					${this.addToCartButton.render()}
+				</div>
+		`
 	}
 }

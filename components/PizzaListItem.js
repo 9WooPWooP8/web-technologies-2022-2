@@ -1,23 +1,37 @@
 export class PizzaListItem {
-	constructor(container, pizzaType, onClick) {
-		this.container = container
-		this.pizzaType = pizzaType
-		this.container.onclick = onClick
+	constructor(options) {
+		this.el = document.createElement('button')
+		this.el.classList.add('pizza-list-item')
 
-		this.imageElement = document.createElement('img')
-		this.imageElement.src = pizzaType.image
-		this.imageElement.classList.add('pizza_list_element__image')
+		this.selected = options.selected || false
+		this.pizzaType = options.pizzaType
 
-		this.pizzaNameElement = document.createElement('div')
-		this.pizzaNameElement.classList.add('pizza_name_element')
+		this.el.onclick = () => {
+			options.onClick(this.pizzaType)
+			console.log('click??')
+			this.selected = true
+		}
+	}
 
-		this.pizzaNameElement.textContent = pizzaType.name
-
-		this.container.appendChild(this.imageElement)
-		this.container.appendChild(this.pizzaNameElement)
+	setSelected(state) {
+		this.selected = state
 	}
 
 	render() {
-		return this.container
+		if (this.selected) {
+			this.el.classList.add('pizza-list-item--active')
+		} else {
+			this.el.classList.remove('pizza-list-item--active')
+		}
+
+		this.el.innerHTML = `
+				<img src="${this.pizzaType.image}" class="pizza-list-item__image">
+				</img>
+				<div class="pizza-list-item__name">
+					${this.pizzaType.name}
+				</div>
+		`
+
+		return this.el.outerHTML
 	}
 }

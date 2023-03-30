@@ -1,4 +1,4 @@
-.pizza_size_selector {
+.pizza-size-selector {
 	border-radius: 20px;
 	background-color: #f2f2f6;
 	display: flex;
@@ -6,30 +6,30 @@
 	height: 30px;
 }
 
-.pizza_menu {
+.pizza-menu-root {
 	display: flex;
 	flex-direction: row;
 	column-gap: 20px;
 }
 
-.pizza_menu__addons {
+.pizza-menu__addons {
 	flex: 1;
 }
 
-.size_selector_wrapper {
+.size-selector-wrapper {
 	font-size: 24px;
 }
 
-.topping_selector_title {
+.topping-selector-title {
 	font-size: 18px;
 
 }
 
-.topping_selector_wrapper{
+.topping-selector-wrapper{
 	margin-top: 20px
 }
 
-.pizza_size_selector__button {
+.pizza-size-selector__button {
 	justify-content: space-between;
 	border-width: 0px;
 	box-shadow: 10px 10px 20px lightgray;
@@ -40,18 +40,18 @@
 	/* padding: 10px; */
 }
 
-.pizza_size_selector__button--active {
+.pizza-size-selector__button--active {
 	background-color: #fdfefe;
 }
 
-.pizza_list {
+.pizza-list {
 	display: flex;
 	width: 500px;
 	flex: 2;
 
 }
 
-.pizza_list_item{
+.pizza-list-item{
 	height: 200px;
 	width: 200px;
 	background-color: #fefefd;
@@ -59,25 +59,25 @@
 	border-radius: 10px;
 }
 
-.pizza_list_item--active{
+.pizza-list-item--active{
 	background-color: #f2f2f6;
 }
 
-.pizza_list_item__image{
+.pizza-list-item__image{
 
 }
 
-.pizza_list_item__name{
+.pizza-list-item__name{
 
 }
 
-.pizza_topping_selector{
+.pizza-topping-selector{
 	display: flex;
 	border-radius: 20px;
 	column-gap: 10px;
 }
 
-.pizza_topping_selector__item{
+.pizza-topping-selector__item{
 	width: 120px;
 	height: 140px;
 	border-width: 0px;
@@ -87,18 +87,18 @@
 	box-shadow: 10px 10px 20px lightgray;
 }
 
-.pizza_topping_selector__item__image{
+.pizza-topping-selector__item__image{
 	object-fit: cover;
 	height: 100px;
 	width: 100px;
 }
 
-.pizza_topping_selector__item--active{
+.pizza-topping-selector__item--active{
 	border-width: 1px;
 	border-color: orange;
 }
 
-.add_to_cart {
+.add-to-cart {
 	background-color: #ec702c;
 	font-size: 16px;
 	width: 400px;

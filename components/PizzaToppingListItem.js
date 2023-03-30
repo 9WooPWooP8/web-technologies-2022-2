@@ -1,39 +1,37 @@
 export class PizzaToppingListItem {
-	constructor(container, toppingType, onClick) {
-		this.container = container
-		this.toppingType = toppingType
-		this.container.onclick = () => {
-			if (
-				this.container.classList.contains(
-					'pizza_topping_selector__item--active'
-				)
-			) {
-				this.container.classList.remove('pizza_topping_selector__item--active')
-			} else {
-				this.container.classList.add('pizza_topping_selector__item--active')
-			}
+	constructor(options) {
+		this.el = document.createElement('button')
+		this.el.classList.add('pizza-topping-selector__item')
+		this.toppingType = options.toppingType
+		this.selected = false
 
-			onClick(this.toppingType)
+		this.el.onclick = () => {
+			this.selected = true
+
+			options.onClick(this.toppingType)
 		}
-
-		this.pizzaToppingImageElement = document.createElement('img')
-		this.pizzaToppingImageElement.src = toppingType.image
-		this.pizzaToppingImageElement.classList.add(
-			'pizza_topping_selector__item__image'
-		)
-
-		this.pizzaToppingNameElement = document.createElement('div')
-		this.pizzaToppingNameElement.classList.add(
-			'pizza_topping_selector__item__name'
-		)
-
-		this.pizzaToppingNameElement.textContent = toppingType.name
-
-		this.container.appendChild(this.pizzaToppingImageElement)
-		this.container.appendChild(this.pizzaToppingNameElement)
 	}
 
 	render() {
-		return this.container
+		if (this.selected)
+			this.el.classList.add('pizza-topping-selector__item--active')
+		else {
+			this.el.classList.remove('pizza-topping-selector__item--active')
+		}
+
+		this.el.innerHTML = `
+			<img 
+				src="${this.toppingType.image}" 
+				class="pizza-topping-selector__item__image"
+			>
+			</img>
+			<div 
+				class="pizza-topping-selector__item__name"
+			>
+				${this.toppingType.name}
+			</div>
+		`
+
+		return this.el.outerHTML
 	}
 }
