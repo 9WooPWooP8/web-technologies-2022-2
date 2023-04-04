@@ -1,6 +1,6 @@
-import { Catalog } from "./src/components/catalog.js"
+import { Catalog } from './src/components/catalog.js'
 
-const renderPostItem = item => `
+const renderPostItem = (item) => `
     <a  
         href="posts.html?id=${item.id}"
         class="post-item"
@@ -16,7 +16,9 @@ const renderPostItem = item => `
 `
 
 const getPostItems = async ({ limit, page }) => {
-	let result = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`)
+	let result = await fetch(
+		`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`
+	)
 
 	const total = +result.headers.get('x-total-count')
 	const items = await result.json()
@@ -24,7 +26,7 @@ const getPostItems = async ({ limit, page }) => {
 	return { items, total }
 }
 
-const renderPhotoItem = item => `
+const renderPhotoItem = (item) => `
     <a  
         href="photos/${item.id}"
         class="photo-item"
@@ -41,7 +43,9 @@ const renderPhotoItem = item => `
 `
 
 const getPhotoItems = async ({ limit, page }) => {
-	let result = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=${limit}&_page=${page}`)
+	let result = await fetch(
+		`https://jsonplaceholder.typicode.com/photos?_limit=${limit}&_page=${page}`
+	)
 
 	const total = +result.headers.get('x-total-count')
 	const items = await result.json()
@@ -53,7 +57,7 @@ const init = async () => {
 	const catalog = document.getElementById('catalog')
 	const newCatalog = new Catalog(catalog, {
 		renderItem: renderPostItem,
-		getItems: getPostItems
+		getItems: getPostItems,
 	})
 
 	await newCatalog.init()
