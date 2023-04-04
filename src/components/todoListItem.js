@@ -1,72 +1,73 @@
 import { Todos } from '../services/todos.js'
 
 export class TodoListItem {
-	#parentEl = null
-	#el = null
-	#todo = null
-	#deleteButton = null
-	#doneCheckBox = null
-	#onDelete = null
+  #parentEl = null
+  #el = null
+  #todo = null
+  #deleteButton = null
+  #doneCheckBox = null
+  #onDelete = null
 
-	constructor(parentEl, options) {
-		let { todo } = options
+  constructor(parentEl, options) {
+    let { todo } = options
 
-		this.#parentEl = parentEl
-		this.#todo = todo
+    this.#parentEl = parentEl
+    this.#todo = todo
 
-		this.#deleteButton = document.createElement('button')
-		this.#deleteButton.innerText = 'X'
+    this.#el = document.createElement('div')
 
-		this.#onDelete = async (event) => {
-			console.log('asdfasdfasdf')
-			// let result = await Todos.delete(this.#todo, this.#todo.id)
+    this.#deleteButton = document.createElement('button')
+    this.#deleteButton.innerText = 'X'
 
-			// if (result.ok) {
-			// 	this.#el.remove()
-			// }
-		}
+    this.#deleteButton = this.#el.appendChild(this.#deleteButton)
 
-		// this.#deleteButton.addEventListener('click', onDelete)
+    this.#onDelete = async () => {
+      console.log(this.#todo.id)
+      let result = await Todos.delete(this.#todo.id)
 
-		this.#doneCheckBox = document.createElement('input')
-		this.#doneCheckBox.type = 'checkbox'
-		this.#doneCheckBox.onchange = async () => {
-			let result = await Todos.put(
-				{ ...this.#todo, completed: this.#doneCheckBox.checked },
-				this.#todo.id
-			)
+      if (result.ok) {
+        this.#el.remove()
+      }
+    }
 
-			this.#todo.completed = result.data.completed
-		}
-	}
+    this.#deleteButton.onclick = this.#onDelete
 
-	setTodo(todo) {
-		this.#todo = todo
-	}
+    this.#el.insertAdjacentHTML('beforeend', '<hr></hr>')
 
-	render() {
-		let todoEl = document.createElement('div')
-		this.#el = todoEl
-		this.#el.innerHTML = `
-			<h6>${this.#todo.description}</h6>
-		`
+    this.#doneCheckBox = document.createElement('input')
+    this.#doneCheckBox.type = 'checkbox'
+    this.#doneCheckBox.onchange = async () => {
+			this.#deleteButton.disabled = true
+			this.#doneCheckBox.disabled = true
 
-		todoEl.appendChild(this.#deleteButton)
+      let result = await Todos.put(
+        { ...this.#todo, completed: this.#doneCheckBox.checked },
+        this.#todo.id
+      )
 
-		this.#doneCheckBox.checked = this.#todo.completed
-		todoEl.appendChild(this.#doneCheckBox)
+			this.#deleteButton.disabled = false
+			this.#doneCheckBox.disabled = false
 
-		this.#parentEl.appendChild(todoEl)
+      this.#todo.completed = result.data.completed
+    }
+  }
 
-		this.#el.innerHTML += `
-			<hr/>
-		`
+  setTodo(todo) {
+    this.#todo = todo
+  }
 
-		console.log(this.#onDelete)
-		
-		this.#deleteButton.addEventListener('click', this.#onDelete)
-		this.#deleteButton.onclick = this.#onDelete
+  render() {
+    this.#el.innerHTML = `
+    	<h6>${this.#todo.description}</h6>
+    `
 
-		console.log(this.#deleteButton.onclick)
-	}
+    this.#doneCheckBox.checked = this.#todo.completed
+
+    this.#el.appendChild(this.#doneCheckBox)
+    this.#el.appendChild(this.#deleteButton)
+
+    this.#el.insertAdjacentHTML('beforeend', '<hr></hr>')
+
+    this.#parentEl.appendChild(this.#el)
+  }
 }

@@ -15,7 +15,7 @@ export const TodoRepository = {
 
 	async put(values, todoId) {
 		return await api(`/todo/${todoId}`, {
-			method: 'POST',
+			method: 'PUT',
 			body: JSON.stringify(values),
 		})
 	},
