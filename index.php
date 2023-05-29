@@ -1,59 +1,41 @@
 <?php
-define("DB_HOST", "localhost");
-define("DB_PORT", "5432");
-define("DB_USER", "postgres");
-define("DB_PASSWORD", "postgres");
-define("DB_NAME", "php_lab20");
-
-function getDb()
+function getGallery($path)
 {
-	$db = pg_connect("host=localhost port=5432 dbname=php_lab20 user=postgres password=postgres");
-	return $db;
-}
+	$files = array_diff(scandir($path), array('.', '..'));
 
-function getFileTreeResult()
-{
-	$sql = " SELECT * FROM file_tree";
-	$result = pg_query(getDb(), $sql);
-
-	$array_result = pg_fetch_all($result);
-
-	return $array_result;
-}
-
-function render_catalog($elements, $parent)
-{
-	foreach ($elements as $item) {
-		if ($item["parent_node"] == $parent) {
-			echo '<div class="list-item list-item_open" data-parent>';
-			echo '<div class="list-item__inner">';
-			echo '<img class="list-item__arrow" src="img/chevron-down.png" alt="chevron-down" data-open>';
-			echo '<img class="list-item__folder" src="img/folder.png" alt="folder">';
-			echo '<div>' . $item["value"] . '</div>';
-			echo '</div>';
-			echo '<div class="list-item__items">';
-			render_catalog($elements, $item["id"]);
-			echo '</div>';
-			echo '</div>';
-		}
+	foreach ($files as $file) {
+		$large_path = "./img/large";
+		echo
+		"<a href='$large_path/$file'>
+					<img style='width:300px' src='$path/$file' />
+				</a>";
 	}
 }
-
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+	<title></title>
 	<meta charset="UTF-8">
-	<title>List Item</title>
-	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-	<div class="list-items" id="list-items">
-		<?php echo (render_catalog(getFileTreeResult(), null)); ?>
+	<div>
+		<form action="uploadImage.php" method="post" enctype="multipart/form-data">
+			Загрузка:
+			<input type="file" name="image" id="image">
+			<input type="submit" value="Отправить" name="submit">
+		</form>
 	</div>
-	<script type="module" src="script.js"></script>
+	<div style="display:flex; column-gap:10px; flex-wrap: wrap">
+		<?php
+		$directory = "./img/small";
+		$gallery = getGallery($directory);
+		echo $gallery;
+		?>
+	</div>
 </body>
-
 </html>
